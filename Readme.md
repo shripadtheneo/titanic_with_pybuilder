@@ -17,3 +17,4 @@
 - HOME_DIR Path has some bug when calling as command from command line so need to check that part
 - Some more update needed for the purpose of accepting user arguments
 - Test code needed to be written
+- pip install to be added at the time of pyb
