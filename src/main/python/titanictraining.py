@@ -23,11 +23,11 @@ class TitanicTraining:
 
     Methods:
     - preprocess_data(): Preprocesses the training and test data.
-    - train_model(preprocessed_train_data): Trains a model using the 
+    - train_model(preprocessed_train_data): Trains a model using the
     preprocessed training data.
-    - evaluate_model(trained_model, preprocessed_test_data): Evaluates the 
+    - evaluate_model(trained_model, preprocessed_test_data): Evaluates the
     trained model using the preprocessed test data.
-    - run(): Runs the entire training process and returns the evaluation 
+    - run(): Runs the entire training process and returns the evaluation
     results.
     """
 
@@ -53,8 +53,9 @@ class TitanicTraining:
         train_test_data = [train, test]  # combine dataset
 
         for dataset in train_test_data:
-            dataset['Title'] = dataset['Name'].str.extract(' ([A-Za-z]+)\.',
-                                                            expand=False)
+            dataset["Title"] = dataset["Name"].str.extract(
+                " ([A-Za-z]+)\.", expand=False
+            )
 
         title_mapping = {
             "Mr": 0,
@@ -262,8 +263,7 @@ class TitanicTraining:
         """
         # Add model evaluation logic here
         # ...
-        x_test = preprocessed_test_data.drop(["Survived", "PassengerId"],
-                                             axis=1)
+        x_test = preprocessed_test_data.drop(["Survived", "PassengerId"], axis=1)
         test_result = pd.read_csv(self.test_result_path)
         y_test = test_result["Survived"]
 
@@ -278,13 +278,11 @@ class TitanicTraining:
         Runs the training process for the Titanic model.
 
         Returns:
-            evaluation_results (dict): A dictionary containing the evaluation 
-            results of the trained model.
+            evaluation_results (dict): A dictionary containing the
+            evaluation results of the trained model.
         """
-        preprocessed_train_data, preprocessed_test_data = \
-            self.preprocess_data()
+        preprocessed_train_data, preprocessed_test_data = self.preprocess_data()
 
         trained_model = self.train_model(preprocessed_train_data)
-        evaluation_results = self.evaluate_model(trained_model,
-                                                 preprocessed_test_data)
+        evaluation_results = self.evaluate_model(trained_model, preprocessed_test_data)
         return evaluation_results

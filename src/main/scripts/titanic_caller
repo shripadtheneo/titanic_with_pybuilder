@@ -4,15 +4,33 @@ import os
 import argparse
 from titanictraining import TitanicTraining
 
-parser = argparse.ArgumentParser(description='Please give the path of data directory')
-parser.add_argument('--data-dir', metavar='DIR', type=str, required=True,
-                    help='path to the data directory')
-parser.add_argument('--train-data', metavar='FILE', type=str, required=True,
-                    help='path to the training data')
-parser.add_argument('--test-data', metavar='FILE', type=str, required=True,
-                    help='path to the test data')
-parser.add_argument('--test-result', metavar='FILE', type=str, required=True,
-                    help='path to the test result')
+parser = argparse.ArgumentParser(
+    description="Please give the path of data directory"
+    )
+parser.add_argument(
+    "--data-dir",
+    metavar="DIR",
+    type=str,
+    required=True,
+    help="path to the data directory",
+)
+parser.add_argument(
+    "--train-data",
+    metavar="FILE",
+    type=str,
+    required=True,
+    help="path to the training data",
+)
+parser.add_argument(
+    "--test-data", metavar="FILE", type=str, required=True, help="path to the test data"
+)
+parser.add_argument(
+    "--test-result",
+    metavar="FILE",
+    type=str,
+    required=True,
+    help="path to the test result",
+)
 
 args = parser.parse_args()
 

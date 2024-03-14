@@ -14,29 +14,29 @@ class TestTitanicTraining:
     test_result = os.path.join(test_dir, "data/gender_submission.csv")
 
     def test_get_preprocessed_data(self):
-        titanic = TitanicTraining(
-            self.train_data, self.test_data, self.test_result
-        )
-        preprocessed_train_data, preprocessed_test_data = \
-            titanic.preprocess_data()
+        """
+        Test the get_preprocessed_data method of TitanicTraining class.
+        """
+        titanic = TitanicTraining(self.train_data, self.test_data, self.test_result)
+        preprocessed_train_data, preprocessed_test_data = titanic.preprocess_data()
         assert preprocessed_train_data.shape == (891, 9)
         assert preprocessed_test_data.shape == (418, 10)
 
     def test_train_model(self):
-        titanic = TitanicTraining(
-            self.train_data, self.test_data, self.test_result
-        )
-        preprocessed_train_data, preprocessed_test_data = \
-            titanic.preprocess_data()
+        """
+        Test the train_model method of TitanicTraining class.
+        """
+        titanic = TitanicTraining(self.train_data, self.test_data, self.test_result)
+        preprocessed_train_data, preprocessed_test_data = titanic.preprocess_data()
         trained_model = titanic.train_model(preprocessed_train_data)
         assert trained_model is not None
 
     def test_evaluate_model(self):
-        titanic = TitanicTraining(
-            self.train_data, self.test_data, self.test_result
-        )
-        preprocessed_train_data, preprocessed_test_data = \
-            titanic.preprocess_data()
+        """
+        Test the evaluate_model method of TitanicTraining class.
+        """
+        titanic = TitanicTraining(self.train_data, self.test_data, self.test_result)
+        preprocessed_train_data, preprocessed_test_data = titanic.preprocess_data()
         trained_model = titanic.train_model(preprocessed_train_data)
         evaluation_result = titanic.evaluate_model(
             trained_model, preprocessed_test_data
