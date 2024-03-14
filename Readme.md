@@ -5,6 +5,7 @@
 4. Change environment to titanic `conda activate titanic`
 5. Install pybuilder `pip install pybuilder`
 6. Refer to the pybuilder https://pybuilder.io/ and documents with tutorial from https://pybuilder.io/documentation/tutorial
+7. Install mypy `pip install mypy`
 
 # Build project from scratch
 1. Create titanic folder and  change to the directory
@@ -12,6 +13,7 @@
 3. `pyb --start-project`
 	`pyb publish`
 4. Open vscode in the given folder
+5. install mypy types `mypy --install-types`
 
 # Execution
 Build test
