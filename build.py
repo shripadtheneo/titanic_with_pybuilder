@@ -6,7 +6,7 @@ use_plugin("python.unittest")
 use_plugin("python.flake8")
 #use_plugin("python.coverage")
 use_plugin("python.distutils")
-
+use_plugin('pypi:pybuilder_pytest')
 
 name = "titanic"
 version = "0.1.0"
@@ -21,3 +21,5 @@ def set_properties(project):
 
     # Install dependencies
     project.depends_on_requirements("requirements.txt")
+
+    project.get_property("pytest_extra_args").append("-x")

@@ -19,6 +19,7 @@ class TitanicTraining:
     Parameters:
     - train_data_path (str): The file path to the training data.
     - test_data_path (str): The file path to the test data.
+    - test_result_path (str): The file path to the test result.
 
     Methods:
     - preprocess_data(): Preprocesses the training and test data.
