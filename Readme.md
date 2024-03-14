@@ -15,13 +15,13 @@
 
 # Execution
 Build test
-`pyb`
+`pyb install_dependencies`
 
 Execute the following command to build and install titanic library
-`pyb && pyb publish && pip install target/dist/titanic-0.1.0/dist/titanic-0.1.0-py3-none-any.whl`
+`pyb install_dependencies && pyb && pyb publish && pip uninstall titanic && pip install target/dist/titanic-0.1.0/dist/titanic-0.1.0-py3-none-any.whl`
 
 Execution of the code
-`titanic_caller --data-dir /home/shripad/source_code/titanic/src/data --test-data test.csv --train-data train.csv --test-result gender_submission.csv`
+`titanic_caller --data-dir src/data --test-data test.csv --train-data train.csv --test-result gender_submission.csv`
 
 To remove the package
 `pip uninstall titanic`

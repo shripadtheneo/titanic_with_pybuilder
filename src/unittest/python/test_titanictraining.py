@@ -11,7 +11,7 @@ class TestTitanicTraining:
     This class contains unit tests for the TitanicTraining class.
     """
 
-    test_dir = sys.path[0]
+    test_dir = os.path.dirname(__file__)
     train_data = os.path.join(test_dir, "data/train.csv")
     test_data = os.path.join(test_dir, "data/test.csv")
     test_result = os.path.join(test_dir, "data/gender_submission.csv")
