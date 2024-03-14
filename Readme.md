@@ -13,5 +13,12 @@
 	`pyb publish`
 4. Open vscode in the given folder
 
+# Execution
+Execute the following command to build and install titanic library
+`pyb && pyb publish && pip install target/dist/titanic-0.1.0/dist/titanic-0.1.0-py3-none-any.whl`
+
+Execution of the code
+`titanic_caller --data-dir /home/shripad/source_code/titanic/src/data --test-data test.csv --train-data train.csv --test-result gender_submission.csv`
+
 # Update Needed
 - Test code needed to be written
