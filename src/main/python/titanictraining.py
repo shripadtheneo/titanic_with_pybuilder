@@ -1,3 +1,6 @@
+"""
+A class that represents the training process for the Titanic dataset.
+"""
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
@@ -100,9 +103,12 @@ class TitanicTraining:
 
         for dataset in train_test_data:
             dataset.loc[dataset["Age"] <= 16, "Age"] = 0
-            dataset.loc[(dataset["Age"] > 16) & (dataset["Age"] <= 26), "Age"] = 1
-            dataset.loc[(dataset["Age"] > 26) & (dataset["Age"] <= 36), "Age"] = 2
-            dataset.loc[(dataset["Age"] > 36) & (dataset["Age"] <= 62), "Age"] = 3
+            dataset.loc[(dataset["Age"] > 16) & (dataset["Age"] <= 26),
+                        "Age"] = 1
+            dataset.loc[(dataset["Age"] > 26) & (dataset["Age"] <= 36),
+                        "Age"] = 2
+            dataset.loc[(dataset["Age"] > 36) & (dataset["Age"] <= 62),
+                        "Age"] = 3
             dataset.loc[dataset["Age"] > 62, "Age"] = 4
 
         for dataset in train_test_data:
@@ -121,8 +127,10 @@ class TitanicTraining:
 
         for dataset in train_test_data:
             dataset.loc[dataset["Fare"] <= 17, "Fare"] = 0
-            dataset.loc[(dataset["Fare"] > 17) & (dataset["Fare"] <= 30), "Fare"] = 1
-            dataset.loc[(dataset["Fare"] > 30) & (dataset["Fare"] <= 100), "Fare"] = 2
+            dataset.loc[(dataset["Fare"] > 17) & (dataset["Fare"] <= 30),
+                        "Fare"] = 1
+            dataset.loc[(dataset["Fare"] > 30) & (dataset["Fare"] <= 100),
+                        "Fare"] = 2
             dataset.loc[dataset["Fare"] > 100, "Fare"] = 3
 
         for dataset in train_test_data:
@@ -263,7 +271,9 @@ class TitanicTraining:
         """
         # Add model evaluation logic here
         # ...
-        x_test = preprocessed_test_data.drop(["Survived", "PassengerId"], axis=1)
+        x_test = preprocessed_test_data.drop(
+            ["Survived", "PassengerId"], axis=1
+        )
         test_result = pd.read_csv(self.test_result_path)
         y_test = test_result["Survived"]
 
@@ -281,8 +291,11 @@ class TitanicTraining:
             evaluation_results (dict): A dictionary containing the
             evaluation results of the trained model.
         """
-        preprocessed_train_data, preprocessed_test_data = self.preprocess_data()
+        preprocessed_train_data, preprocessed_test_data = \
+            self.preprocess_data()
 
         trained_model = self.train_model(preprocessed_train_data)
-        evaluation_results = self.evaluate_model(trained_model, preprocessed_test_data)
+        evaluation_results = self.evaluate_model(
+            trained_model, preprocessed_test_data
+        )
         return evaluation_results

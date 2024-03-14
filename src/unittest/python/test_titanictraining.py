@@ -1,6 +1,9 @@
-from titanictraining import TitanicTraining
+"""
+This module contains unit tests for the TitanicTraining class.
+"""
 import os
 import sys
+from titanictraining import TitanicTraining
 
 
 class TestTitanicTraining:
@@ -17,8 +20,11 @@ class TestTitanicTraining:
         """
         Test the get_preprocessed_data method of TitanicTraining class.
         """
-        titanic = TitanicTraining(self.train_data, self.test_data, self.test_result)
-        preprocessed_train_data, preprocessed_test_data = titanic.preprocess_data()
+        titanic = TitanicTraining(
+            self.train_data, self.test_data, self.test_result
+        )
+        preprocessed_train_data, preprocessed_test_data = \
+            titanic.preprocess_data()
         assert preprocessed_train_data.shape == (891, 9)
         assert preprocessed_test_data.shape == (418, 10)
 
@@ -26,8 +32,12 @@ class TestTitanicTraining:
         """
         Test the train_model method of TitanicTraining class.
         """
-        titanic = TitanicTraining(self.train_data, self.test_data, self.test_result)
-        preprocessed_train_data, preprocessed_test_data = titanic.preprocess_data()
+        titanic = TitanicTraining(
+            self.train_data, self.test_data, self.test_result
+        )
+        preprocessed_train_data, preprocessed_test_data = \
+            titanic.preprocess_data()
+        del preprocessed_test_data
         trained_model = titanic.train_model(preprocessed_train_data)
         assert trained_model is not None
 
@@ -35,8 +45,11 @@ class TestTitanicTraining:
         """
         Test the evaluate_model method of TitanicTraining class.
         """
-        titanic = TitanicTraining(self.train_data, self.test_data, self.test_result)
-        preprocessed_train_data, preprocessed_test_data = titanic.preprocess_data()
+        titanic = TitanicTraining(
+            self.train_data, self.test_data, self.test_result
+        )
+        preprocessed_train_data, preprocessed_test_data = \
+            titanic.preprocess_data()
         trained_model = titanic.train_model(preprocessed_train_data)
         evaluation_result = titanic.evaluate_model(
             trained_model, preprocessed_test_data
