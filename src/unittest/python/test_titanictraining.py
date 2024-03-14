@@ -2,7 +2,6 @@
 This module contains unit tests for the TitanicTraining class.
 """
 import os
-import sys
 from titanictraining import TitanicTraining
 
 
