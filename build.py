@@ -26,7 +26,7 @@ def set_properties(project):
         project: The PyBuilder project object.
     """
     # Set Python version
-    project.set_property("python_version", "3.8")
+    project.set_property("python_version", "3.11.8")
 
     # Install dependencies
     project.depends_on_requirements("requirements.txt")
