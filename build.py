@@ -8,10 +8,10 @@ from pybuilder.core import use_plugin, init
 use_plugin("python.core")
 use_plugin("python.unittest")
 use_plugin("python.flake8")
-use_plugin("python.coverage")
 use_plugin("python.distutils")
 use_plugin("python.install_dependencies")
 use_plugin("pypi:pybuilder_pytest")
+use_plugin('pypi:pybuilder_pytest_coverage')
 
 name = "titanic"
 version = "0.1.0"
@@ -36,3 +36,5 @@ def set_properties(project):
 
     # Set coverage_break_build to False
     project.set_property("coverage_break_build", False)
+
+    # project.set_property_if_unset("pytest_coverage_break_build_threshold", 50)
