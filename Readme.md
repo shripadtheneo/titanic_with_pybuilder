@@ -16,7 +16,7 @@
 5. install mypy types `mypy --install-types`
 
 # Execution
-Install depecencies
+Install dependencies
 `pyb install_dependencies`
 
 Execute the following command to build and install titanic library
