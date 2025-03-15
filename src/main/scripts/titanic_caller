@@ -1,46 +1,180 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# filepath: /Users/d_shripad/source_code/titanic_with_pybuilder/src/main/scripts/titanic_caller
+"""
+Command-line interface for Titanic ML operations.
+"""
 import os
+import sys
 import argparse
-from titanictraining import TitanicTraining
+import pickle
+from pathlib import Path
 
-parser = argparse.ArgumentParser(
-    description="Please give the path of data directory"
-)
-parser.add_argument(
-    "--data-dir",
-    metavar="DIR",
-    type=str,
-    required=True,
-    help="path to the data directory",
-)
-parser.add_argument(
-    "--train-data",
-    metavar="FILE",
-    type=str,
-    required=True,
-    help="path to the training data",
-)
-parser.add_argument(
-    "--test-data",
-    metavar="FILE",
-    type=str,
-    required=True,
-    help="path to the test data"
-)
-parser.add_argument(
-    "--test-result",
-    metavar="FILE",
-    type=str,
-    required=True,
-    help="path to the test result",
-)
+# Add the parent directory to the Python path so we can import the modules
+sys.path.append(str(Path(__file__).parent.parent.parent))
 
-args = parser.parse_args()
+from titanic_preprocessing import TitanicPreprocessing
+from titanic_training import TitanicTraining
+from titanic_evaluation import TitanicEvaluation
 
-train_data = os.path.join(args.data_dir, args.train_data)
-test_data = os.path.join(args.data_dir, args.test_data)
-test_result = os.path.join(args.data_dir, args.test_result)
+# Default paths
+DATA_DIR = Path(__file__).parent.parent.parent.parent / "data"
+TRAIN_PATH = DATA_DIR / "train.csv"
+TEST_PATH = DATA_DIR / "test.csv"
+GENDER_SUBMISSION_PATH = DATA_DIR / "gender_submission.csv"
+MODEL_PATH = DATA_DIR / "titanic_models.pkl"
+PREPROCESSED_DATA_PATH = DATA_DIR / "preprocessed_data.pkl"
 
-titanic = TitanicTraining(train_data, test_data, test_result)
-print(titanic.run())
+
+def preprocess(args):
+    """Preprocess the data and save to disk"""
+    preprocessor = TitanicPreprocessing(args.train_data, args.test_data)
+    preprocessed_train_data, preprocessed_test_data = preprocessor.preprocess_data()
+
+    # Create data directory if it doesn't exist
+    os.makedirs(os.path.dirname(args.output), exist_ok=True)
+
+    # Save preprocessed data
+    with open(args.output, "wb") as f:
+        pickle.dump(
+            {"train": preprocessed_train_data, "test": preprocessed_test_data}, f
+        )
+
+    print(f"Preprocessing completed. Data saved to {args.output}")
+
+
+def train(args):
+    """Train models on preprocessed data and save models to disk"""
+    # Load preprocessed data
+    with open(args.preprocessed_data, "rb") as f:
+        data = pickle.load(f)
+
+    trainer = TitanicTraining()
+    trained_models = trainer.train_model(data["train"])
+
+    # Create directory if it doesn't exist
+    os.makedirs(os.path.dirname(args.output), exist_ok=True)
+
+    # Save trained models
+    with open(args.output, "wb") as f:
+        pickle.dump(trained_models, f)
+
+    print(f"Training completed. Models saved to {args.output}")
+
+
+def evaluate(args):
+    """Evaluate saved models on test data"""
+    # Load preprocessed data
+    with open(args.preprocessed_data, "rb") as f:
+        data = pickle.load(f)
+
+    # Load trained models
+    with open(args.model, "rb") as f:
+        trained_models = pickle.load(f)
+
+    evaluator = TitanicEvaluation(args.test_result)
+    evaluation_results = evaluator.evaluate_model(trained_models, data["test"])
+
+    # Print evaluation results
+    print("\nModel Evaluation Results:")
+    print("-" * 40)
+    for model_name, score in evaluation_results.items():
+        print(f"{model_name.ljust(20)}: {score:.4f}")
+
+    # Find and print the best model
+    best_model = max(evaluation_results.items(), key=lambda x: x[1])
+    print("\nBest model:")
+    print(f"{best_model[0]}: {best_model[1]:.4f}")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Titanic Machine Learning Pipeline",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Preprocess data
+  titanic_caller preprocess
+  
+  # Train models
+  titanic_caller train
+  
+  # Evaluate models
+  titanic_caller evaluate
+  
+  # Run all steps
+  titanic_caller preprocess && titanic_caller train && titanic_caller evaluate
+        """,
+    )
+
+    subparsers = parser.add_subparsers(dest="command", help="Command to run")
+
+    # Preprocess command
+    preprocess_parser = subparsers.add_parser(
+        "preprocess", help="Preprocess the Titanic dataset"
+    )
+    preprocess_parser.add_argument(
+        "--train-data",
+        default=TRAIN_PATH,
+        help=f"Path to training data (default: {TRAIN_PATH})",
+    )
+    preprocess_parser.add_argument(
+        "--test-data",
+        default=TEST_PATH,
+        help=f"Path to test data (default: {TEST_PATH})",
+    )
+    preprocess_parser.add_argument(
+        "--output",
+        default=PREPROCESSED_DATA_PATH,
+        help=f"Output path for preprocessed data (default: {PREPROCESSED_DATA_PATH})",
+    )
+
+    # Train command
+    train_parser = subparsers.add_parser(
+        "train", help="Train models on preprocessed data"
+    )
+    train_parser.add_argument(
+        "--preprocessed-data",
+        default=PREPROCESSED_DATA_PATH,
+        help=f"Path to preprocessed data (default: {PREPROCESSED_DATA_PATH})",
+    )
+    train_parser.add_argument(
+        "--output",
+        default=MODEL_PATH,
+        help=f"Output path for trained models (default: {MODEL_PATH})",
+    )
+
+    # Evaluate command
+    evaluate_parser = subparsers.add_parser("evaluate", help="Evaluate trained models")
+    evaluate_parser.add_argument(
+        "--preprocessed-data",
+        default=PREPROCESSED_DATA_PATH,
+        help=f"Path to preprocessed data (default: {PREPROCESSED_DATA_PATH})",
+    )
+    evaluate_parser.add_argument(
+        "--model",
+        default=MODEL_PATH,
+        help=f"Path to trained models (default: {MODEL_PATH})",
+    )
+    evaluate_parser.add_argument(
+        "--test-result",
+        default=GENDER_SUBMISSION_PATH,
+        help=f"Path to test results (default: {GENDER_SUBMISSION_PATH})",
+    )
+
+    args = parser.parse_args()
+
+    if args.command is None:
+        parser.print_help()
+        return
+
+    # Execute the specified command
+    if args.command == "preprocess":
+        preprocess(args)
+    elif args.command == "train":
+        train(args)
+    elif args.command == "evaluate":
+        evaluate(args)
+
+
+if __name__ == "__main__":
+    main()
