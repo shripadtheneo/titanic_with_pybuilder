@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# filepath: /Users/d_shripad/source_code/titanic_with_pybuilder/src/main/scripts/titanic_caller
 """
 Command-line interface for Titanic ML operations.
 """
