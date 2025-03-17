@@ -40,7 +40,6 @@ if [ $# -ge 3 ] && [ "$3" = "upload" ]; then
     # Check if AWS CLI is installed
     if ! command -v aws &> /dev/null; then
         echo "AWS CLI not found. Please install it to use CodeArtifact authentication."
-        echo "Installation guide: https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html"
         exit 1
     fi
 
