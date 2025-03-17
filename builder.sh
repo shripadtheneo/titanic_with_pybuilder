@@ -73,7 +73,7 @@ echo "Successfully installed $PROJECT_NAME package (version $VERSION)"
 # Upload to PyPI if requested
 if [ $UPLOAD -eq 1 ]; then
     echo "Uploading package to PyPI..."
-    twine upload -r codeartifact "target/dist/${PROJECT_NAME}-${VERSION}/dist/${PROJECT_NAME}-${VERSION}-py3-none-any.whl" "target/dist/${PROJECT_NAME}-${VERSION}/dist/${PROJECT_NAME}-${VERSION}.tar.gz"
+    twine upload -r codeartifact --skip-existing "target/dist/${PROJECT_NAME}-${VERSION}/dist/${PROJECT_NAME}-${VERSION}-py3-none-any.whl" "target/dist/${PROJECT_NAME}-${VERSION}/dist/${PROJECT_NAME}-${VERSION}.tar.gz"
     
     # Check if upload was successful
     if [ $? -ne 0 ]; then
