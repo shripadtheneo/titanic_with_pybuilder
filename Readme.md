@@ -29,3 +29,25 @@ Execution of the code
 
 To remove the package
 `pip uninstall titanic`
+
+# For building the pip package using builder script
+You have to execute `sh builder.sh` with project_name and version to be passed. If you wish to upload the package, pass `upload` as a parameter to the script
+
+Command Pattern
+
+```
+sh builder.sh <project_name> <version> <upload>
+```
+
+with upload:
+```
+sh builder.sh <project_name> <version> <upload>
+sh builder.sh titanic 0.2.0 upload
+```
+without upload:
+```
+sh builder.sh titanic 0.2.0
+```
+
+## Important:
+Also when you are using for development and testing and, make sure to use version carefully and do not use upload command unless necessary as it will upload the new package. 

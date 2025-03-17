@@ -11,7 +11,7 @@ use_plugin("python.flake8")
 use_plugin("python.distutils")
 use_plugin("python.install_dependencies")
 use_plugin("pypi:pybuilder_pytest")
-use_plugin('pypi:pybuilder_pytest_coverage')
+use_plugin("pypi:pybuilder_pytest_coverage")
 
 name = "titanic"
 version = "0.2.0"
