@@ -14,7 +14,7 @@ use_plugin("pypi:pybuilder_pytest")
 use_plugin("pypi:pybuilder_pytest_coverage")
 
 name = "titanic"
-version = "0.2.0"
+version = "0.1.0"
 default_task = "publish"
 
 

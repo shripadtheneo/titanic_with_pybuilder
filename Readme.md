@@ -36,13 +36,13 @@ You have to execute `sh builder.sh` with project_name and version to be passed. 
 Command Pattern
 
 ```
-sh builder.sh <project_name> <version> <upload>
+sh builder.sh <project_name> <version> <upload> <dev/stg/prod>
 ```
 
 with upload:
 ```
 sh builder.sh <project_name> <version> <upload>
-sh builder.sh titanic 0.2.0 upload
+sh builder.sh titanic 0.2.0 upload dev
 ```
 without upload:
 ```

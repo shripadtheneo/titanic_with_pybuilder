@@ -1,4 +1,6 @@
 #!/bin/bash
+# Initialize repository variable
+REPOSITORY="dev"
 
 # Check if project name is provided
 if [ $# -lt 1 ]; then
@@ -17,6 +19,13 @@ PROJECT_NAME=$1
 # Set version (default to 0.1.0 if not provided)
 VERSION=${2:-"0.1.0"}
 UPLOAD=0
+
+# Get ENV from the 4th argument if provided
+if [ $# -ge 4 ]; then
+    ENV=$4
+    REPOSITORY="$ENV"
+    echo "Using repository: $REPOSITORY"
+fi
 
 # Check if upload is requested
 if [ $# -ge 3 ] && [ "$3" = "upload" ]; then
@@ -37,7 +46,7 @@ if [ $# -ge 3 ] && [ "$3" = "upload" ]; then
 
     # Use AWS CodeArtifact login for twine
     echo "Setting up AWS CodeArtifact authentication..."
-    aws codeartifact login --tool twine --repository Data_Science_Repository --domain ml-repository --domain-owner 127214153984 --region ap-northeast-1
+    aws codeartifact login --tool twine --repository $REPOSITORY --domain ml-repository --domain-owner 127214153984 --region ap-northeast-1
     
     if [ $? -ne 0 ]; then
         echo "Failed to authenticate with CodeArtifact. Check your AWS credentials and permissions."
