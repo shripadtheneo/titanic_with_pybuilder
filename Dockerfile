@@ -10,6 +10,7 @@ COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install pybuilder
 
 # Copy the project files into the container
 COPY . .
@@ -18,5 +19,3 @@ RUN pyb install_dependencies && pyb && pyb publish
 RUN pip install target/dist/titanic-0.1.0/dist/titanic-0.1.0-py3-none-any.whl
 
 
-# Command to run when the container starts
-CMD ["python", "app.py"]

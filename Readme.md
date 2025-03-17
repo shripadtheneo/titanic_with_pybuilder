@@ -23,9 +23,9 @@ Execute the following command to build and install titanic library
 `pyb install_dependencies && pyb && pyb publish && pip uninstall titanic && pip install target/dist/titanic-0.1.0/dist/titanic-0.1.0-py3-none-any.whl`
 
 Execution of the code
-`titanic_caller preprocess --train-data src/data/train.csv --test-data src/data/test.csv --output src/data/preprocessed_data.csv`
-`titanic_caller train --preprocessed-data src/data/preprocessed_data.csv --output  src/data/titanic_models.pkl`
-`titanic_caller evaluate --preprocessed-data src/data/preprocessed_data.csv --model  src/data/titanic_models.pkl --test-result src/data/gender_submission.csv`
+`titanic preprocess --train-data src/data/train.csv --test-data src/data/test.csv --output src/data/preprocessed_data.csv`
+`titanic train --preprocessed-data src/data/preprocessed_data.csv --output  src/data/titanic_models.pkl`
+`titanic evaluate --preprocessed-data src/data/preprocessed_data.csv --model  src/data/titanic_models.pkl --test-result src/data/gender_submission.csv`
 
 To remove the package
 `pip uninstall titanic`
